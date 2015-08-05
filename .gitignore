@@ -3,3 +3,4 @@ bin/
 include/
 lib/
 test/conf.cfg
+__pycache__
