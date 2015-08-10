@@ -27,6 +27,10 @@ def full_path():
 def get_dirlist(client, path):
     return client.dirlist(path)[1]
 
+@pytest.fixture
+def rnd_fname():
+    return str(uuid.uuid4())
+
 class Test_Dirlist():
 
     def test_dirlist(self, xrootd_client, test_dir):
@@ -63,3 +67,8 @@ class Test_Stuff():
         # cleanup
         xdc.rm(test_dir+fname)
         assert len(get_dirlist(xdc, test_dir).dirlist) == val_before
+
+    def test_opening(self, full_path, fname=rnd_fname()):
+        status, f = client.File().open(full_path+fname, OpenFlags.READ)
+        assert status.ok == False
+        assert status.error == True
