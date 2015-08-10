@@ -4,3 +4,4 @@ include/
 lib/
 test/conf.cfg
 __pycache__
+*.pyc
