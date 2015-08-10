@@ -2,7 +2,7 @@ import pytest
 from xrootdfs import XRootDFS
 
 from configobj import ConfigObj
-cfg = ConfigObj('test/conf.cfg')['system']
+cfg = ConfigObj('test/conf.cfg')['xrootd']
 
 @pytest.fixture
 def get_fs():

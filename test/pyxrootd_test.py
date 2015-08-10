@@ -2,7 +2,7 @@ import pytest
 from XRootD import client
 
 from configobj import ConfigObj
-cfg = ConfigObj('test/conf.cfg')['system']
+cfg = ConfigObj('test/conf.cfg')['xrootd']
 
 @pytest.fixture
 def xrootd_client():
