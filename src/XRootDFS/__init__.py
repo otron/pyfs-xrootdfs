@@ -11,3 +11,7 @@ class XRootDFS(fs.base.FS):
     def listdir(self, path='./'):
         status, res = self.fs.dirlist(self.base_path + path)
         return [unicode(e.name) for e in res]
+
+    def open(path, mode='r', buffering=-1, encoding=None, errors=None,
+            newline=None, line_buffering=False, **kwargs):
+        pass
