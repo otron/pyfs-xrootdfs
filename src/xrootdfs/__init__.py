@@ -14,4 +14,4 @@ class XRootDFS(fs.base.FS):
 
     def open(path, mode='r', buffering=-1, encoding=None, errors=None,
             newline=None, line_buffering=False, **kwargs):
-        pass
+        res = XRootDFile()

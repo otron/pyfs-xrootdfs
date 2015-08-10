@@ -5,8 +5,19 @@ import fs.filelike
 
 class XRootDFile(fs.filelike.FileLikeBase):
 
-    def __init__(self, bufsize=1024*64):
+    def __init__(self, path, flags=0, timeout=0, callback=None,
+            bufsize=1024*64):
+
         super(XRootDFile, self).__init__(bufsize)
+        # set .__file to empty xrootd.client.File-object.
+        self.__file = client.File()
+
+        status, response = self.__file.open(path, flags, mode, timeout)
+        # todo: raise appropriate errors
+
+
+
+  def open(self, url, flags=0, mode=0, timeout=0, callback=None):
 
     def seek(self, offset, whence=0):
         self._ifp = offset
