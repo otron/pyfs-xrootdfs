@@ -7,11 +7,15 @@ class XRootDFS(fs.base.FS):
     def __init__(self, addr, path='/'):
         self.fs = xclient.FileSystem(addr)
         self.base_path = path
+        self._addr = addr
+        self._url = self.base_path + '/' + self._addr
 
     def listdir(self, path='./'):
         status, res = self.fs.dirlist(self.base_path + path)
         return [unicode(e.name) for e in res]
 
-    def open(path, mode='r', buffering=-1, encoding=None, errors=None,
+    def open(self, path, mode='r', buffering=-1, encoding=None, errors=None,
             newline=None, line_buffering=False, **kwargs):
-        res = XRootDFile()
+        # path must be full-on address with the server and everything, yo.
+        return XRootDFile(self._url + path, mode=mode)
+
