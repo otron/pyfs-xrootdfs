@@ -7,7 +7,7 @@ from configobj import ConfigObj
 def get_local_fs():
     return OSFS
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def cfg():
     return ConfigObj('test/conf.cfg')
 
