@@ -19,7 +19,7 @@ class XRootDFile(fs.filelike.FileLikeBase):
         self._ifp = offset
 
     def read(self, size=0, offset=None, timeout=0, callback=None):
-        if offset=None:
+        if offset==None:
             offset=self._ifp
         return self._file.read(offset, size, timeout, callback)
 
