@@ -4,33 +4,28 @@ from XRootD.client.flags import OpenFlags
 
 import uuid
 
-from configobj import ConfigObj
-cfg = ConfigObj('test/conf.cfg')['xrootd']
+### Fixtures
+@pytest.fixture
+def xrootd_client(cfg):
+    return client.FileSystem(cfg['xrootd']['address'])
 
 @pytest.fixture
-def xrootd_client():
-    return client.FileSystem(cfg['address'])
+def test_dir(cfg):
+    return cfg['xrootd']['home_dir'] + 'test/'
 
 @pytest.fixture
-def test_dir():
-    return cfg['home_dir'] + 'test/'
+def address(cfg):
+    return cfg['xrootd']['address']
 
 @pytest.fixture
-def address():
-    return cfg['address']
+def full_path(cfg):
+    return address(cfg) + '/' + test_dir(cfg)
 
-@pytest.fixture
-def full_path():
-    return address() + '/' + test_dir()
-
-@pytest.fixture
 def get_dirlist(client, path):
     return client.dirlist(path)[1]
 
-@pytest.fixture
-def rnd_fname():
-    return str(uuid.uuid4())
 
+### Tests
 class Test_Dirlist():
 
     def test_dirlist(self, xrootd_client, test_dir):
@@ -46,7 +41,7 @@ class Test_Dirlist():
 
 class Test_Stuff():
 
-    def test_filecreation(self, xrootd_client, test_dir):
+    def test_filecreation(self, xrootd_client, test_dir, address):
         # get dirlist, save value
         xdc = xrootd_client
         listing = get_dirlist(xdc, test_dir)
@@ -55,7 +50,7 @@ class Test_Stuff():
         # create file using NEW flag
         # requires that the file doesn't already exist
         fname = str(uuid.uuid4())
-        fpath = address()+'/'+test_dir+fname
+        fpath = address+'/'+test_dir+fname
         with client.File() as f:
             f.open(fpath, OpenFlags.NEW)
             f.write('youse\ncannot\nbe\nfor\nreals,\nhuh?')
@@ -68,7 +63,8 @@ class Test_Stuff():
         xdc.rm(test_dir+fname)
         assert len(get_dirlist(xdc, test_dir).dirlist) == val_before
 
-    def test_opening(self, full_path, fname=rnd_fname()):
+    def test_opening(self, full_path, rnd_fname):
+        fname = rnd_fname
         status, f = client.File().open(full_path+fname, OpenFlags.READ)
         assert status.ok == False
         assert status.error == True
