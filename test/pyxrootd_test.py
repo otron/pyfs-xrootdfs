@@ -4,26 +4,8 @@ from XRootD.client.flags import OpenFlags
 
 import uuid
 
-### Fixtures
-@pytest.fixture
-def xrootd_client(cfg):
-    return client.FileSystem(cfg['xrootd']['address'])
-
-@pytest.fixture
-def test_dir(cfg):
-    return cfg['xrootd']['home_dir'] + 'test/'
-
-@pytest.fixture
-def address(cfg):
-    return cfg['xrootd']['address']
-
-@pytest.fixture
-def full_path(cfg):
-    return address(cfg) + '/' + test_dir(cfg)
-
 def get_dirlist(client, path):
     return client.dirlist(path)[1]
-
 
 ### Tests
 class Test_Dirlist():
