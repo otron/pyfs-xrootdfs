@@ -5,3 +5,4 @@ lib/
 test/conf.cfg
 __pycache__
 *.pyc
+test_files/
