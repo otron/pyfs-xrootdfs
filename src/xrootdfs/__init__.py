@@ -2,6 +2,7 @@
 
 import fs.base
 from XRootD import client as xclient
+from XRootD.client.flags import OpenFlags
 from xrootdfs.xrdfile import *
 
 class XRootDFS(fs.base.FS):
@@ -18,4 +19,8 @@ class XRootDFS(fs.base.FS):
     def open(self, path, mode='r', buffering=-1, encoding=None, errors=None,
             newline=None, line_buffering=False, **kwargs):
         # path must be full-on address with the server and everything, yo.
-        return XRootDFile(self._url + path, mode=mode)
+        flags = 0
+        if 'r' in mode:
+            flags += OpenFlags.READ
+
+        return XRootDFile(self._url + path, flags, mode=0)

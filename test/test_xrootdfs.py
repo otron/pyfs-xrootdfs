@@ -20,8 +20,7 @@ def xrdfs(address, test_dir):
 
 class Test_FileBasics():
 
-    def test_readfile(self, existing_file, xrdfs):
+    def test_openfile(self, existing_file, xrdfs):
         ftest = xrdfs.open(existing_file['name'])
         assert type(ftest) == xrootdfs.XRootDFile
-
 
