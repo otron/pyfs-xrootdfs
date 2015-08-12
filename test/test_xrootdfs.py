@@ -1,6 +1,6 @@
 import pytest
 import xrootdfs
-import xrdfile
+from xrootdfs import xrdfile
 from XRootD import client
 from XRootD.client.flags import OpenFlags
 

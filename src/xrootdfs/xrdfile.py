@@ -1,6 +1,4 @@
-from XRootD import client
-from XRootD import File as XFile
-import xrootdfs
+from XRootD.client import File as XFile
 import fs.filelike
 
 class XRootDFile(fs.filelike.FileLikeBase):
@@ -9,7 +7,7 @@ class XRootDFile(fs.filelike.FileLikeBase):
 
         super(XRootDFile, self).__init__(bufsize)
         # set .__file to empty xrootd.client.File-object.
-        self.__file = client.File()
+        self.__file = XFile()
 
         status, response = self.__file.open(path, mode=mode)
         # todo: raise appropriate errors

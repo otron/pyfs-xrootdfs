@@ -2,6 +2,7 @@
 
 import fs.base
 from XRootD import client as xclient
+from xrootdfs.xrdfile import *
 
 class XRootDFS(fs.base.FS):
     def __init__(self, addr, path='/'):
@@ -18,4 +19,3 @@ class XRootDFS(fs.base.FS):
             newline=None, line_buffering=False, **kwargs):
         # path must be full-on address with the server and everything, yo.
         return XRootDFile(self._url + path, mode=mode)
-
